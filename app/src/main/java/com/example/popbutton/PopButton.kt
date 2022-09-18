@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +17,7 @@ import androidx.compose.ui.unit.Dp
 @Composable
 fun PopButton(
     modifier: Modifier = Modifier,
-    drawableId: Int,
+    drawableId: State<Int>,
     centerImageSize: Dp,
     popEffect: PopEffect,
     onClick: () -> Unit
@@ -32,7 +33,7 @@ fun PopButton(
         )
 
         Image(
-            painter = painterResource(id = drawableId),
+            painter = painterResource(id = drawableId.value),
             contentDescription = null,
             modifier = Modifier
                 .size(centerImageSize)
@@ -40,8 +41,8 @@ fun PopButton(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null
                 ) {
-                    popEffect.startEffect()
                     onClick()
+                    popEffect.startEffect()
                 }
         )
     }
